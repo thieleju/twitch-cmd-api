@@ -1,13 +1,18 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const app = express();
 
 const port = process.env.PORT || 3000;
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+app.use(limiter);
+
 // use sanitizer
 app.use(require("sanitize").middleware);
-
-// parse json
-// app.use(express.json());
 
 // routes
 app.use("/lichesselo", require("./routes/lichesselo"));
