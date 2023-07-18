@@ -5,11 +5,12 @@
 
 A simple API for twitch bots.
 
-## Available endpoints
+## Available Endpoints
 
 `GET /lichesselo/:mode/:username`
 
 Returns the lichess elo for the chosen mode of the given user.
+Response is the elo as text.
 
 #### Available modes
 
@@ -19,6 +20,6 @@ Returns the lichess elo for the chosen mode of the given user.
 - `classical`
 - `puzzle`
 
-## Example
+### Example
 
 `GET twitch-api.node5.de/lichesselo/blitz/privitx`
