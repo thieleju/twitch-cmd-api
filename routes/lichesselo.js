@@ -30,6 +30,9 @@ router.get("/:mode/:username", async (req, res) => {
         break;
       case "puzzle":
         response = data.perfs.puzzle.rating;
+        break;
+      case "all":
+        response = `Bullet: ${data.perfs.bullet.rating} ~ Blitz: ${data.perfs.blitz.rating} ~ Rapid: ${data.perfs.rapid.rating} ~ Klassisch: ${data.perfs.classical.rating} ~ Puzzle: ${data.perfs.puzzle.rating}`;
     }
     log(`Request for ${cleanUsername} (${cleanMode}) => ${response}`);
     res.send(String(response));
