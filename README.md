@@ -27,3 +27,9 @@ Response is the elo as text.
   - `@${sender} Blitz elo of ${1}: ${urlfetch https://twitch-api.node5.de/lichesselo/blitz/${1}}`
 - Type `!blitz <username>` in chat
 - Output: `@user Blitz elo of user: 1500`
+
+## Run locally
+
+- `npm install` to install dependencies
+- `npm run dev` to start the server on port 3000
+  - Visit `localhost:3000`
