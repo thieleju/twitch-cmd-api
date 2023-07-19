@@ -19,7 +19,11 @@ Response is the elo as text.
 - `rapid`
 - `classical`
 - `puzzle`
+- `all`
 
-### Example
+### Streamelements Command Example
 
-`GET twitch-api.node5.de/lichesselo/blitz/privitx`
+- Add this as a new custom command
+  - `@${sender} Blitz elo of ${1}: ${urlfetch https://twitch-api.node5.de/lichesselo/blitz/${1}}`
+- Type `!blitz <username>` in chat
+- Output: `@user Blitz elo of user: 1500`
