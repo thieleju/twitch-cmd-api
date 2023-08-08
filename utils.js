@@ -1,5 +1,7 @@
-function log(headers, route, msg) {
+function log(req, res, msg) {
   const date = new Date().toISOString();
+  const headers = res ? res.getHeaders() : null;
+  const route = req ? `${req?.baseUrl}${req?.path}` : "SERVER";
   const ratelimit = headers
     ? `${headers["ratelimit-remaining"]} / ${headers["ratelimit-limit"]} | `
     : "";
