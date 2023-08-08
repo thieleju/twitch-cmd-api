@@ -11,7 +11,11 @@ router.get("/:mode/:username", async (req, res) => {
 
     const apiUrl = `https://api.chess.com/pub/player/${cleanUsername}/stats`;
 
-    const { data } = await axios.get(apiUrl);
+    const { data } = await axios.get(apiUrl, {
+      headers: {
+        "User-Agent": "Twitch-cmd-api (github.com/thieleju/twitch-cmd-api)",
+      },
+    });
 
     const response = getChessComResponse(cleanMode, data);
 
@@ -19,7 +23,7 @@ router.get("/:mode/:username", async (req, res) => {
 
     res.send(String(response));
   } catch (err) {
-    log(res.getHeaders(), req.baseUrl, err);
+    log(req, res, err);
     res.send("Error or user not found!");
   }
 });
