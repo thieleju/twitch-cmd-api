@@ -32,5 +32,5 @@ app.get("*", (req, res) => {
 
 // start server
 app.listen(port, () => {
-  log(null, "SERVER", `App listening on port ${port}!`);
+  log(null, null, `App listening on port ${port}!`);
 });

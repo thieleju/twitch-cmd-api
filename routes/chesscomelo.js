@@ -15,15 +15,11 @@ router.get("/:mode/:username", async (req, res) => {
 
     const response = getChessComResponse(cleanMode, data);
 
-    log(
-      res.getHeaders(),
-      req.path,
-      `Request for ${cleanUsername} (${cleanMode}) => ${response}`
-    );
+    log(req, res, `Request for ${cleanUsername} (${cleanMode}) => ${response}`);
 
     res.send(String(response));
   } catch (err) {
-    log(res.getHeaders(), req.path, err);
+    log(res.getHeaders(), req.baseUrl, err);
     res.send("Error or user not found!");
   }
 });
