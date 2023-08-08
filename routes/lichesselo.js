@@ -17,7 +17,7 @@ router.get("/:mode/:username", async (req, res) => {
 
     const response = getLichessResponse(cleanMode, data.perfs);
 
-    log(req, res`Request for ${cleanUsername} (${cleanMode}) => ${response}`);
+    log(req, res, `Request for ${cleanUsername} (${cleanMode}) => ${response}`);
 
     res.send(String(response));
   } catch (err) {
