@@ -30,7 +30,7 @@ Response is the elo as text.
 
 <br>
 
-## `GET /lichesselo/:mode/:username`
+## `GET /chesscomelo/:mode/:username`
 
 Returns the chess.com elo for the chosen mode of the given user.
 Response is the elo as text.
