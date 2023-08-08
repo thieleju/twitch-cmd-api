@@ -1,41 +1,48 @@
-function log(msg, headers) {
-  if (headers)
-    console.log(
-      `${new Date().toISOString()} | ${
-        headers["ratelimit-remaining"] + "/" + headers["ratelimit-limit"]
-      } | ${msg}`
-    );
-  else console.log(`${new Date().toISOString()} | ${msg}`);
+function log(headers, route, msg) {
+  const date = new Date().toISOString();
+  const ratelimit = headers
+    ? `${headers["ratelimit-remaining"]} / ${headers["ratelimit-limit"]} | `
+    : "";
+
+  console.log(`${date} | ${ratelimit}${route} | ${msg}`);
 }
 
 function getLichessResponse(mode, perfs) {
-  let response = "";
   switch (mode) {
     case "bullet":
-      response = perfs.bullet.rating;
-      break;
+      return perfs.bullet.rating;
     case "blitz":
-      response = perfs.blitz.rating;
-      break;
+      return perfs.blitz.rating;
     case "rapid":
-      response = perfs.rapid.rating;
-      break;
+      return perfs.rapid.rating;
     case "classical":
-      response = perfs.classical.rating;
-      break;
+      return perfs.classical.rating;
     case "puzzle":
-      response = perfs.puzzle.rating;
-      break;
+      return perfs.puzzle.rating;
     case "all":
-      response = `Bullet: ${perfs.bullet.rating} ~ Blitz: ${perfs.blitz.rating} ~ Rapid: ${perfs.rapid.rating} ~ Klassisch: ${perfs.classical.rating} ~ Puzzle: ${perfs.puzzle.rating}`;
-      break;
+      return `Bullet: ${perfs.bullet.rating} ~ Blitz: ${perfs.blitz.rating} ~ Rapid: ${perfs.rapid.rating} ~ Klassisch: ${perfs.classical.rating} ~ Puzzle: ${perfs.puzzle.rating}`;
     default:
-      response = "Invalid mode!";
+      return "Invalid mode!";
   }
-  return response;
+}
+
+function getChessComResponse(mode, data) {
+  switch (mode) {
+    case "bullet":
+      return data.chess_bullet.last.rating;
+    case "blitz":
+      return data.chess_blitz.last.rating;
+    case "rapid":
+      return data.chess_rapid.last.rating;
+    case "all":
+      return `Bullet: ${data.chess_bullet.last.rating} ~ Blitz: ${data.chess_blitz.last.rating} ~ Rapid: ${data.chess_rapid.last.rating}`;
+    default:
+      return "Invalid mode!";
+  }
 }
 
 module.exports = {
   log,
   getLichessResponse,
+  getChessComResponse,
 };

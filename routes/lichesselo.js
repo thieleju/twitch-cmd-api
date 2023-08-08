@@ -18,13 +18,14 @@ router.get("/:mode/:username", async (req, res) => {
     const response = getLichessResponse(cleanMode, data.perfs);
 
     log(
-      `Request for ${cleanUsername} (${cleanMode}) => ${response}`,
-      res.getHeaders()
+      res.getHeaders(),
+      req.path,
+      `Request for ${cleanUsername} (${cleanMode}) => ${response}`
     );
 
     res.send(String(response));
   } catch (err) {
-    log(err, res.getHeaders());
+    log(res.getHeaders(), req.path, err);
     res.send("Error or user not found!");
   }
 });

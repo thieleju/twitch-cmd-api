@@ -21,6 +21,7 @@ app.use(require("sanitize").middleware);
 
 // routes
 app.use("/lichesselo", require("./routes/lichesselo"));
+app.use("/chesscomelo", require("./routes/chesscomelo"));
 
 // fallback route
 app.get("*", (req, res) => {
@@ -31,5 +32,5 @@ app.get("*", (req, res) => {
 
 // start server
 app.listen(port, () => {
-  log(`App listening on port ${port}!`);
+  log(null, "SERVER", `App listening on port ${port}!`);
 });
