@@ -2,20 +2,18 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-const { log, getLichessResponse } = require("../utils");
-
-const lichessurl = "https://lichess.org/api/user";
+const { log, getChessComResponse } = require("../utils");
 
 router.get("/:mode/:username", async (req, res) => {
   try {
     const cleanMode = req.paramString("mode");
     const cleanUsername = req.paramString("username");
 
-    const apiUrl = `${lichessurl}/${cleanUsername}`;
+    const apiUrl = `https://api.chess.com/pub/player/${cleanUsername}/stats`;
 
     const { data } = await axios.get(apiUrl);
 
-    const response = getLichessResponse(cleanMode, data.perfs);
+    const response = getChessComResponse(cleanMode, data);
 
     log(
       res.getHeaders(),
