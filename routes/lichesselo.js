@@ -21,7 +21,7 @@ router.get("/:mode/:username", async (req, res) => {
 
     res.send(String(response));
   } catch (err) {
-    log(res.getHeaders(), req.path, err);
+    log(req, res, err);
     res.send("Error or user not found!");
   }
 });
