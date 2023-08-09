@@ -44,7 +44,7 @@ function getChessComResponse(mode, data) {
       if (bullet) arr.push(`Bullet: ${bullet}`);
       if (blitz) arr.push(`Blitz: ${blitz}`);
       if (rapid) arr.push(`Rapid: ${rapid}`);
-      return arr.join(" ~ ");
+      return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!";
     default:
       return "Invalid mode!";
   }
