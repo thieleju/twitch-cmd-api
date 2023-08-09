@@ -29,15 +29,23 @@ function getLichessResponse(mode, perfs) {
 }
 
 function getChessComResponse(mode, data) {
+  console.log(data);
+  const bullet = data.chess_bullet?.last?.rating || false;
+  const blitz = data.chess_blitz?.last?.rating || false;
+  const rapid = data.chess_rapid?.last?.rating || false;
   switch (mode) {
     case "bullet":
-      return data.chess_bullet.last.rating;
+      return bullet || "No bullet rating found!";
     case "blitz":
-      return data.chess_blitz.last.rating;
+      return blitz || "No blitz rating found!";
     case "rapid":
-      return data.chess_rapid.last.rating;
+      return rapid || "No rapid rating found!";
     case "all":
-      return `Bullet: ${data.chess_bullet.last.rating} ~ Blitz: ${data.chess_blitz.last.rating} ~ Rapid: ${data.chess_rapid.last.rating}`;
+      let arr = [];
+      if (bullet) arr.push(`Bullet: ${bullet}`);
+      if (blitz) arr.push(`Blitz: ${blitz}`);
+      if (rapid) arr.push(`Rapid: ${rapid}`);
+      return arr.join(" ~ ");
     default:
       return "Invalid mode!";
   }
