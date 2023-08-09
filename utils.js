@@ -29,7 +29,6 @@ function getLichessResponse(mode, perfs) {
 }
 
 function getChessComResponse(mode, data) {
-  console.log(data);
   const bullet = data.chess_bullet?.last?.rating || false;
   const blitz = data.chess_blitz?.last?.rating || false;
   const rapid = data.chess_rapid?.last?.rating || false;
