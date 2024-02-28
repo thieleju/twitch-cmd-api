@@ -1,5 +1,5 @@
 # Base image
-FROM node:20-alpine
+FROM node:21-alpine
 
 # Create and set the working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy the rest of the server code
 COPY . .
