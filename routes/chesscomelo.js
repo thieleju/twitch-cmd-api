@@ -1,31 +1,52 @@
-const express = require("express");
-const router = express.Router();
-const axios = require("axios");
+import express from "express"
+import { Router } from "express"
+import axios from "axios"
+import Joi from "joi"
+import { createValidator } from "express-joi-validation"
 
-const { log, getChessComResponse } = require("../utils");
+const validator = createValidator({})
+const router = Router()
 
-router.get("/:mode/:username", async (req, res) => {
-  try {
-    const cleanMode = req.paramString("mode");
-    const cleanUsername = req.paramString("username");
+import { log, getChessComResponse } from "../utils.js"
 
-    const apiUrl = `https://api.chess.com/pub/player/${cleanUsername}/stats`;
+router.get(
+  "/:mode/:username",
+  validator.params(
+    Joi.object({
+      mode: Joi.string()
+        .trim()
+        .valid("bullet", "blitz", "rapid", "all")
+        .required(),
+      username: Joi.string().trim().required()
+    })
+  ),
+  async (req, res) => {
+    try {
+      const cleanMode = req.paramString("mode")
+      const cleanUsername = req.paramString("username")
 
-    const { data } = await axios.get(apiUrl, {
-      headers: {
-        "User-Agent": "Twitch-cmd-api (github.com/thieleju/twitch-cmd-api)",
-      },
-    });
+      const apiUrl = `https://api.chess.com/pub/player/${cleanUsername}/stats`
 
-    const response = getChessComResponse(cleanMode, data);
+      const { data } = await axios.get(apiUrl, {
+        headers: {
+          "User-Agent": "Twitch-cmd-api (github.com/thieleju/twitch-cmd-api)"
+        }
+      })
 
-    log(req, res, `Request for ${cleanUsername} (${cleanMode}) => ${response}`);
+      const response = getChessComResponse(cleanMode, data)
 
-    res.send(String(response));
-  } catch (err) {
-    log(req, res, err);
-    res.send("Error or user not found!");
+      log(
+        req,
+        res,
+        `Request for ${cleanUsername} (${cleanMode}) => ${response}`
+      )
+
+      res.send(String(response))
+    } catch (err) {
+      log(req, res, err)
+      res.send("User not found!")
+    }
   }
-});
+)
 
-module.exports = router;
+export default router

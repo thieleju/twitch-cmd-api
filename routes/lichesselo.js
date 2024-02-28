@@ -1,29 +1,50 @@
-const express = require("express");
-const router = express.Router();
-const axios = require("axios");
+import express from "express"
+import { Router } from "express"
+import axios from "axios"
+import Joi from "joi"
+import { createValidator } from "express-joi-validation"
 
-const { log, getLichessResponse } = require("../utils");
+const validator = createValidator({})
+const router = Router()
 
-const lichessurl = "https://lichess.org/api/user";
+import { log, getLichessResponse } from "../utils.js"
 
-router.get("/:mode/:username", async (req, res) => {
-  try {
-    const cleanMode = req.paramString("mode");
-    const cleanUsername = req.paramString("username");
+const lichessurl = "https://lichess.org/api/user"
 
-    const apiUrl = `${lichessurl}/${cleanUsername}`;
+router.get(
+  "/:mode/:username",
+  validator.params(
+    Joi.object({
+      mode: Joi.string()
+        .trim()
+        .valid("puzzle", "bullet", "blitz", "rapid", "classical", "all")
+        .required(),
+      username: Joi.string().trim().required()
+    })
+  ),
+  async (req, res) => {
+    try {
+      const cleanMode = req.paramString("mode")
+      const cleanUsername = req.paramString("username")
 
-    const { data } = await axios.get(apiUrl);
+      const apiUrl = `${lichessurl}/${cleanUsername}`
 
-    const response = getLichessResponse(cleanMode, data.perfs);
+      const { data } = await axios.get(apiUrl)
 
-    log(req, res, `Request for ${cleanUsername} (${cleanMode}) => ${response}`);
+      const response = getLichessResponse(cleanMode, data.perfs)
 
-    res.send(String(response));
-  } catch (err) {
-    log(req, res, err);
-    res.send("Error or user not found!");
+      log(
+        req,
+        res,
+        `Request for ${cleanUsername} (${cleanMode}) => ${response}`
+      )
+
+      res.send(String(response))
+    } catch (err) {
+      log(req, res, err)
+      res.send("User not found!")
+    }
   }
-});
+)
 
-module.exports = router;
+export default router
