@@ -1,57 +1,51 @@
-function log(req, res, msg) {
-  const date = new Date().toISOString();
-  const headers = res ? res.getHeaders() : null;
-  const route = req ? `${req?.baseUrl}${req?.path}` : "SERVER";
+export function log(req, res, msg) {
+  const date = new Date().toISOString()
+  const headers = res ? res.getHeaders() : null
+  const route = req ? `${req?.baseUrl}${req?.path}` : "SERVER"
   const ratelimit = headers
     ? `${headers["ratelimit-remaining"]} / ${headers["ratelimit-limit"]} | `
-    : "";
+    : ""
 
-  console.log(`${date} | ${ratelimit}${route} | ${msg}`);
+  console.log(`${date} | ${ratelimit}${route} | ${msg}`)
 }
 
-function getLichessResponse(mode, perfs) {
+export function getLichessResponse(mode, perfs) {
   switch (mode) {
     case "bullet":
-      return perfs.bullet.rating;
+      return perfs.bullet.rating
     case "blitz":
-      return perfs.blitz.rating;
+      return perfs.blitz.rating
     case "rapid":
-      return perfs.rapid.rating;
+      return perfs.rapid.rating
     case "classical":
-      return perfs.classical.rating;
+      return perfs.classical.rating
     case "puzzle":
-      return perfs.puzzle.rating;
+      return perfs.puzzle.rating
     case "all":
-      return `Bullet: ${perfs.bullet.rating} ~ Blitz: ${perfs.blitz.rating} ~ Rapid: ${perfs.rapid.rating} ~ Klassisch: ${perfs.classical.rating} ~ Puzzle: ${perfs.puzzle.rating}`;
+      return `Bullet: ${perfs.bullet.rating} ~ Blitz: ${perfs.blitz.rating} ~ Rapid: ${perfs.rapid.rating} ~ Classical: ${perfs.classical.rating} ~ Puzzle: ${perfs.puzzle.rating}`
     default:
-      return "Invalid mode!";
+      return "Invalid mode!"
   }
 }
 
-function getChessComResponse(mode, data) {
-  const bullet = data.chess_bullet?.last?.rating || false;
-  const blitz = data.chess_blitz?.last?.rating || false;
-  const rapid = data.chess_rapid?.last?.rating || false;
+export function getChessComResponse(mode, data) {
+  const bullet = data.chess_bullet?.last?.rating || false
+  const blitz = data.chess_blitz?.last?.rating || false
+  const rapid = data.chess_rapid?.last?.rating || false
   switch (mode) {
     case "bullet":
-      return bullet || "No bullet rating found!";
+      return bullet || "No bullet rating found!"
     case "blitz":
-      return blitz || "No blitz rating found!";
+      return blitz || "No blitz rating found!"
     case "rapid":
-      return rapid || "No rapid rating found!";
+      return rapid || "No rapid rating found!"
     case "all":
-      let arr = [];
-      if (bullet) arr.push(`Bullet: ${bullet}`);
-      if (blitz) arr.push(`Blitz: ${blitz}`);
-      if (rapid) arr.push(`Rapid: ${rapid}`);
-      return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!";
+      let arr = []
+      if (bullet) arr.push(`Bullet: ${bullet}`)
+      if (blitz) arr.push(`Blitz: ${blitz}`)
+      if (rapid) arr.push(`Rapid: ${rapid}`)
+      return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!"
     default:
-      return "Invalid mode!";
+      return "Invalid mode!"
   }
 }
-
-module.exports = {
-  log,
-  getLichessResponse,
-  getChessComResponse,
-};
