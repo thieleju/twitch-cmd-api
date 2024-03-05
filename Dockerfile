@@ -14,10 +14,10 @@ RUN npm install --omit=dev
 Run npm run build
 
 # Copy the rest of the server code
-COPY dist ./dist
+COPY dist .
 
 # Expose the port that the Express app listens on
 EXPOSE 3000
 
 # Start the Express app
-CMD [ "node", "dist/src/index.js" ]
+CMD [ "node", "src/index.js" ]
