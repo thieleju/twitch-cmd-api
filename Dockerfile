@@ -8,16 +8,16 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --omit=dev
+RUN npm install 
 
 # Build the app
 Run npm run build
 
 # Copy the rest of the server code
-COPY . .
+COPY dist .
 
 # Expose the port that the Express app listens on
 EXPOSE 3000
 
 # Start the Express app
-CMD [ "node", "dist/src/index.js" ]
+CMD [ "node", "src/index.js" ]
