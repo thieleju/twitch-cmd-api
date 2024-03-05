@@ -1,15 +1,13 @@
-export function log(req, res, msg) {
-  const date = new Date().toISOString()
-  const headers = res ? res.getHeaders() : null
-  const route = req ? `${req?.baseUrl}${req?.path}` : "SERVER"
-  const ratelimit = headers
-    ? `${headers["ratelimit-remaining"]} / ${headers["ratelimit-limit"]} | `
-    : ""
+import { Request, Response } from "express"
 
-  console.log(`${date} | ${ratelimit}${route} | ${msg}`)
+export function log(
+  msg: string
+): void {
+  const date: string = new Date().toISOString()
+  console.log(`${date} | ${msg}`)
 }
 
-export function getLichessResponse(mode, perfs) {
+export function getLichessResponse(mode: string, perfs: any): string {
   switch (mode) {
     case "bullet":
       return perfs.bullet.rating
@@ -28,19 +26,19 @@ export function getLichessResponse(mode, perfs) {
   }
 }
 
-export function getChessComResponse(mode, data) {
-  const bullet = data.chess_bullet?.last?.rating || false
-  const blitz = data.chess_blitz?.last?.rating || false
-  const rapid = data.chess_rapid?.last?.rating || false
+export function getChessComResponse(mode: string, data: any): string {
+  const bullet: string | boolean = data.chess_bullet?.last?.rating || false
+  const blitz: string | boolean = data.chess_blitz?.last?.rating || false
+  const rapid: string | boolean = data.chess_rapid?.last?.rating || false
   switch (mode) {
     case "bullet":
-      return bullet || "No bullet rating found!"
+      return bullet ? String(bullet) : "No bullet rating found!"
     case "blitz":
-      return blitz || "No blitz rating found!"
+      return blitz ? String(blitz) : "No blitz rating found!"
     case "rapid":
-      return rapid || "No rapid rating found!"
+      return rapid ? String(rapid) : "No rapid rating found!"
     case "all":
-      let arr = []
+      const arr: string[] = []
       if (bullet) arr.push(`Bullet: ${bullet}`)
       if (blitz) arr.push(`Blitz: ${blitz}`)
       if (rapid) arr.push(`Rapid: ${rapid}`)

@@ -2,7 +2,6 @@
 
 [![Build and Deploy](https://github.com/thieleju/twitch-cmd-api/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/thieleju/twitch-cmd-api/actions/workflows/build-and-deploy.yml)
 
-
 A simple API for twitch bots.
 
 # Available Endpoints
