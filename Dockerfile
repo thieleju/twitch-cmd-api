@@ -4,14 +4,15 @@ FROM node:21-alpine
 # Create and set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json, package-lock.json and tsconfig.json to the working directory
 COPY package*.json ./
+COPY tsconfig.json ./
 
 # Install dependencies
 RUN npm install 
 
 # Build the app
-Run npm run build
+RUN npm run build
 
 # Copy the rest of the server code
 COPY . .
