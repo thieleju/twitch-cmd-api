@@ -11,11 +11,13 @@ COPY tsconfig.json ./
 # Install dependencies
 RUN npm install 
 
-# Build the app
-RUN npm run build
+RUN ls -la
 
 # Copy the rest of the server code
 COPY . .
+
+# Build the app
+RUN npm run build
 
 # Expose the port that the Express app listens on
 EXPOSE 3000
