@@ -1,35 +1,67 @@
 import { Request, Response } from "express"
 
-export function log(
-  msg: string
-): void {
+import { LichessUserData } from "./types/lichess"
+import { ChesscomUserData } from "./types/chesscom"
+
+/**
+ * Logs a message to the console with a timestamp
+ * @param {string} msg - The message to log 
+ * @returns {void}
+ */
+export function log(msg: string): void {
   const date: string = new Date().toISOString()
   console.log(`${date} | ${msg}`)
 }
 
-export function getLichessResponse(mode: string, perfs: any): string {
+/**
+ * Extracts the response from the Lichess API data
+ * @param {string} mode - The mode to extract from the data
+ * @param {LichessUserData} data - The data from the Lichess API
+ * @returns {string} - The extracted response
+ */
+export function getLichessResponse(
+  mode: string,
+  data: LichessUserData
+): string {
+  const perfs: LichessUserData["perfs"] = data.perfs
   switch (mode) {
     case "bullet":
-      return perfs.bullet.rating
+      return String(perfs.bullet?.rating ?? "No bullet rating found!")
     case "blitz":
-      return perfs.blitz.rating
+      return String(perfs.blitz?.rating ?? "No blitz rating found!")
     case "rapid":
-      return perfs.rapid.rating
+      return String(perfs.rapid?.rating ?? "No rapid rating found!")
     case "classical":
-      return perfs.classical.rating
+      return String(perfs.classical?.rating ?? "No classical rating found!")
     case "puzzle":
-      return perfs.puzzle.rating
+      return String(perfs.puzzle?.rating ?? "No puzzle rating found!")
     case "all":
-      return `Bullet: ${perfs.bullet.rating} ~ Blitz: ${perfs.blitz.rating} ~ Rapid: ${perfs.rapid.rating} ~ Classical: ${perfs.classical.rating} ~ Puzzle: ${perfs.puzzle.rating}`
+      const arr: string[] = []
+      if (perfs.bullet) arr.push(`Bullet: ${perfs.bullet.rating}`)
+      if (perfs.blitz) arr.push(`Blitz: ${perfs.blitz.rating}`)
+      if (perfs.rapid) arr.push(`Rapid: ${perfs.rapid.rating}`)
+      if (perfs.classical) arr.push(`Classical: ${perfs.classical.rating}`)
+      if (perfs.puzzle) arr.push(`Puzzle: ${perfs.puzzle.rating}`)
+      return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!"
     default:
       return "Invalid mode!"
   }
 }
 
-export function getChessComResponse(mode: string, data: any): string {
-  const bullet: string | boolean = data.chess_bullet?.last?.rating || false
-  const blitz: string | boolean = data.chess_blitz?.last?.rating || false
-  const rapid: string | boolean = data.chess_rapid?.last?.rating || false
+/**
+ * Extracts the response from the Chess.com API data
+ * @param {string} mode - The mode to extract from the data
+ * @param {ChesscomUserData} data - The data from the Chess.com API
+ * @returns {string} - The extracted response
+ */
+export function getChessComResponse(
+  mode: string,
+  data: ChesscomUserData
+): string {
+  const bullet: number | undefined = data.chess_bullet?.last?.rating
+  const blitz: number | undefined = data.chess_blitz?.last?.rating
+  const rapid: number | undefined = data.chess_rapid?.last?.rating
+
   switch (mode) {
     case "bullet":
       return bullet ? String(bullet) : "No bullet rating found!"
