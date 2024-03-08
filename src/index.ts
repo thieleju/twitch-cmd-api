@@ -67,8 +67,14 @@ app.use(
   })
 )
 
+app.get("/", (_req: Request, res: Response) => {
+  res.send(
+    `Twitch Command API<br> Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a>`
+  )
+})
+
 // Robots.txt to prevent crawlers from indexing the site
-app.get("/robots.txt", function (_req: Request, res: Response) {
+app.get("/robots.txt", function(_req: Request, res: Response) {
   res.type("text/plain")
   res.send("User-agent: *\nDisallow: /")
 })
@@ -86,9 +92,7 @@ app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 // fallback route
 app.get("*", (_req: Request, res: Response) => {
-  res.send(
-    `Twitch Command API<br> Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a>`
-  )
+  res.status(404).send("Not found")
 })
 
 // start server
