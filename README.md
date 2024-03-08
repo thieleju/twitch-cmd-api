@@ -50,6 +50,6 @@ Response is the elo as text.
 
 ## Run locally
 
-- `npm install` to install dependencies
-- `npm run dev` to start the server on port 3000
+- `pnpm i` to install dependencies
+- `pnpm run dev` to start the server on port 3000
   - Visit `localhost:3000`
