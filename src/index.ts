@@ -7,6 +7,8 @@ import "express-async-errors"
 import { log } from "./utils"
 
 import * as packageJson from "../package.json"
+import lichesselo from "./routes/lichesselo"
+import tchesscomelo from "./routes/chesscomelo"
 
 // Node process error handling
 process.on("uncaughtException", (ex: Error) => {
@@ -25,7 +27,7 @@ const app: Application = express()
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 500, // max requests per windowMs
+    max: 100, // max requests per windowMs
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Don't add X-RateLimit headers
     message: "Too many requests!"
@@ -67,6 +69,14 @@ app.use(
   })
 )
 
+// prevent passing query parameters
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.query && Object.keys(req.query).length > 0) {
+    return res.status(400).send("Query parameters are not allowed")
+  }
+  next()
+})
+
 app.get("/", (_req: Request, res: Response) => {
   res.send(
     `Twitch Command API<br> Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a>`
@@ -80,8 +90,6 @@ app.get("/robots.txt", function(_req: Request, res: Response) {
 })
 
 // routes
-import lichesselo from "./routes/lichesselo"
-import tchesscomelo from "./routes/chesscomelo"
 app.use("/lichesselo", lichesselo)
 app.use("/chesscomelo", tchesscomelo)
 
