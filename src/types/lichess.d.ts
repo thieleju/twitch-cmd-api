@@ -86,8 +86,4 @@ export interface LichessUserData {
     import: number
     me: number
   }
-  followable: boolean
-  following: boolean
-  blocking: boolean
-  followsYou: boolean
 }
