@@ -84,7 +84,7 @@ app.get("/", (_req: Request, res: Response) => {
 })
 
 // Robots.txt to prevent crawlers from indexing the site
-app.get("/robots.txt", function(_req: Request, res: Response) {
+app.get("/robots.txt", function (_req: Request, res: Response) {
   res.type("text/plain")
   res.send("User-agent: *\nDisallow: /")
 })

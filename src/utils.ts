@@ -5,7 +5,7 @@ import { ChesscomUserData } from "./types/chesscom"
 
 /**
  * Logs a message to the console with a timestamp
- * @param {string} msg - The message to log 
+ * @param {string} msg - The message to log
  * @returns {void}
  */
 export function log(msg: string): void {
@@ -37,9 +37,9 @@ export function getLichessResponse(
       return String(perfs.puzzle?.rating ?? "No puzzle rating found!")
     case "all":
       const arr: string[] = []
-      if (perfs.bullet) arr.push(`Bullet: ${perfs.bullet.rating}`)
-      if (perfs.blitz) arr.push(`Blitz: ${perfs.blitz.rating}`)
       if (perfs.rapid) arr.push(`Rapid: ${perfs.rapid.rating}`)
+      if (perfs.blitz) arr.push(`Blitz: ${perfs.blitz.rating}`)
+      if (perfs.bullet) arr.push(`Bullet: ${perfs.bullet.rating}`)
       if (perfs.classical) arr.push(`Classical: ${perfs.classical.rating}`)
       if (perfs.puzzle) arr.push(`Puzzle: ${perfs.puzzle.rating}`)
       return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!"
@@ -71,9 +71,9 @@ export function getChessComResponse(
       return rapid ? String(rapid) : "No rapid rating found!"
     case "all":
       const arr: string[] = []
-      if (bullet) arr.push(`Bullet: ${bullet}`)
-      if (blitz) arr.push(`Blitz: ${blitz}`)
       if (rapid) arr.push(`Rapid: ${rapid}`)
+      if (blitz) arr.push(`Blitz: ${blitz}`)
+      if (bullet) arr.push(`Bullet: ${bullet}`)
       return arr.length > 0 ? arr.join(" ~ ") : "No ratings found!"
     default:
       return "Invalid mode!"
