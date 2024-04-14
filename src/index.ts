@@ -4,7 +4,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import "express-async-errors"
 
-import { log } from "./utils"
+import { log, loadRoutes } from "./utils"
 
 import * as packageJson from "../package.json"
 import lichesselo from "./routes/lichesselo"
@@ -23,6 +23,9 @@ process.on("unhandledRejection", (ex: Error) => {
 
 const port = process.env.PORT || 3000
 const app: Application = express()
+
+// Enable trust proxy to get the real IP address of the client
+app.set("trust proxy", 1)
 
 app.use(
   rateLimit({
@@ -77,10 +80,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
+// root route
 app.get("/", (_req: Request, res: Response) => {
-  res.send(
-    `Twitch Command API<br> Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a>`
-  )
+  let response = `
+      <h1>Twitch Command API</h1>
+      <p>Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a></p>`
+
+  if (Array.isArray(loadedRoutes)) {
+    const listItems = loadedRoutes.map((route) => `<li>/${route}</li>`)
+    response += `<h2>Available endpoints:</h2><ul>${listItems.join("")}</ul>`
+  }
+  return res.send(response)
 })
 
 // Robots.txt to prevent crawlers from indexing the site
@@ -89,9 +99,8 @@ app.get("/robots.txt", function (_req: Request, res: Response) {
   res.send("User-agent: *\nDisallow: /")
 })
 
-// routes
-app.use("/lichesselo", lichesselo)
-app.use("/chesscomelo", tchesscomelo)
+// Import and use routes from "routes" directory
+let loadedRoutes = loadRoutes(app)
 
 // Global error handler middleware
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
