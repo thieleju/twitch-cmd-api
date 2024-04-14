@@ -79,29 +79,3 @@ export function getChessComResponse(
       return "Invalid mode!"
   }
 }
-
-/**
- * Loads all routes from the routes directory
- *
- * @param {Application} app - The express application
- * @returns {Array<string>} - The list of loaded routes
- */
-export function loadRoutes(app: Application): Array<string> {
-  const fs = require("fs")
-  const path = require("path")
-  const routesDir = path.join(__dirname, "routes")
-
-  let loadedRoutes: Array<string> = []
-  // Load all routes from the routes directory
-  fs.readdirSync(routesDir).forEach((fileName: string) => {
-    const filePath = path.join(routesDir, fileName)
-    // Check if the file is a route
-    if (fs.statSync(filePath).isFile()) {
-      const routeName = fileName.replace(".ts", "").replace(".js", "")
-      app.use(`/${routeName}`, require(filePath).default)
-      loadedRoutes.push(routeName)
-      log(`Loading route: /${routeName}`)
-    }
-  })
-  return loadedRoutes
-}

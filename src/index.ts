@@ -4,11 +4,11 @@ import helmet from "helmet"
 import morgan from "morgan"
 import "express-async-errors"
 
-import { log, loadRoutes } from "./utils"
+import { log } from "./utils"
 
 import * as packageJson from "../package.json"
 import lichesselo from "./routes/lichesselo"
-import tchesscomelo from "./routes/chesscomelo"
+import chesscomelo from "./routes/chesscomelo"
 
 // Node process error handling
 process.on("uncaughtException", (ex: Error) => {
@@ -85,11 +85,6 @@ app.get("/", (_req: Request, res: Response) => {
   let response = `
       <h1>Twitch Command API</h1>
       <p>Visit this project on github: <a href='${packageJson.repository.url}'>Github link</a></p>`
-
-  if (Array.isArray(loadedRoutes)) {
-    const listItems = loadedRoutes.map((route) => `<li>/${route}</li>`)
-    response += `<h2>Available endpoints:</h2><ul>${listItems.join("")}</ul>`
-  }
   return res.send(response)
 })
 
@@ -99,8 +94,9 @@ app.get("/robots.txt", function (_req: Request, res: Response) {
   res.send("User-agent: *\nDisallow: /")
 })
 
-// Import and use routes from "routes" directory
-let loadedRoutes = loadRoutes(app)
+// Add routes
+app.use("/chesscomelo", chesscomelo)
+app.use("/lichesselo", lichesselo)
 
 // Global error handler middleware
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
