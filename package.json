@@ -19,7 +19,7 @@
   "author": "thieleju",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.3",
+    "axios": "^1.7.7",
     "express-async-errors": "^3.1.1",
     "express-joi-validation": "^5.0.1",
     "express-rate-limit": "^7.4.0",
@@ -30,15 +30,15 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^22.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.8.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "express": "^4.19.2",
-    "nodemon": "^3.1.4",
+    "@types/node": "^22.5.5",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "eslint": "^9.10.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.6",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   }
 }
