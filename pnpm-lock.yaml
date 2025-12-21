@@ -11,9 +11,6 @@ importers:
       axios:
         specifier: ^1.13.2
         version: 1.13.2
-      express-async-errors:
-        specifier: ^3.1.1
-        version: 3.1.1(express@5.1.0)
       express-joi-validation:
         specifier: ^6.1.0
         version: 6.1.0(joi@18.0.2)
@@ -768,11 +765,6 @@ packages:
   etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
-
-  express-async-errors@3.1.1:
-    resolution: {integrity: sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==}
-    peerDependencies:
-      express: ^4.16.2
 
   express-joi-validation@6.1.0:
     resolution: {integrity: sha512-dZ//ySohG3PHdtySaZMfQhE38iJUxuWCT0obsrDcjTP2nol8olFak3kaK2IxIHpAnOiPCZmsjZNCubhv1YXFPA==}
@@ -2469,10 +2461,6 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
-
-  express-async-errors@3.1.1(express@5.1.0):
-    dependencies:
-      express: 5.1.0
 
   express-joi-validation@6.1.0(joi@18.0.2):
     dependencies:

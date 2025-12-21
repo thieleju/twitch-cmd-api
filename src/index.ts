@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction, Application } from "express"
 import rateLimit from "express-rate-limit"
 import helmet from "helmet"
 import morgan from "morgan"
-import "express-async-errors"
 
 import { log } from "./utils"
 
@@ -98,14 +97,14 @@ app.get("/robots.txt", function (_req: Request, res: Response) {
 app.use("/chesscomelo", chesscomelo)
 app.use("/lichesselo", lichesselo)
 
+// fallback
+app.use((_req: Request, res: Response) => {
+  res.status(404).send("Not found")
+})
+
 // Global error handler middleware
 app.use((_err: Error, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).send("Internal Server Error")
-})
-
-// fallback route
-app.get("*", (_req: Request, res: Response) => {
-  res.status(404).send("Not found")
 })
 
 // start server
