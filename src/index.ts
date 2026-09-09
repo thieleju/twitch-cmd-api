@@ -8,6 +8,7 @@ import { log } from "./utils"
 import * as packageJson from "../package.json"
 import lichesselo from "./routes/lichesselo"
 import chesscomelo from "./routes/chesscomelo"
+import conditional from "./routes/conditional"
 
 // Node process error handling
 process.on("uncaughtException", (ex: Error) => {
@@ -96,6 +97,7 @@ app.get("/robots.txt", function (_req: Request, res: Response) {
 // Add routes
 app.use("/chesscomelo", chesscomelo)
 app.use("/lichesselo", lichesselo)
+app.use("/conditional", conditional)
 
 // fallback
 app.use((_req: Request, res: Response) => {
