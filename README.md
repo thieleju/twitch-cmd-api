@@ -48,6 +48,34 @@ Response is the elo as text.
 - Type `!blitz <username>` in chat
 - Output: `@user Blitz elo of user: 1500`
 
+<br>
+
+## `GET /conditional/:left/:operator/:right/:ifTrue/:ifFalse`
+
+Evaluates a condition and returns plain text for true or false.
+Designed for StreamElements `$(customapi)` usage.
+
+#### Available operators
+
+- `eq` (equals)
+- `eqi` (equals, case-insensitive)
+- `ne` (not equals)
+- `nei` (not equals, case-insensitive)
+- `contains`
+- `containsi` (case-insensitive)
+- `startswith`
+- `startswithi` (case-insensitive)
+- `endswith`
+- `endswithi` (case-insensitive)
+- `gt` (greater than, numeric)
+- `gte` (greater than or equal, numeric)
+- `lt` (less than, numeric)
+- `lte` (less than or equal, numeric)
+
+Note:
+
+- Replace spaces with `_` in `ifTrue`/`ifFalse` and format the final text in StreamElements if needed.
+
 ## Run locally
 
 - `pnpm i` to install dependencies
