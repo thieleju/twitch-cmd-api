@@ -7,9 +7,10 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Copy package.json, pnpm-lock.json and tsconfig.json to the working directory
+# Copy dependency manifests and pnpm workspace config
 COPY package*.json ./
 COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
 COPY tsconfig.json ./
 
 # Install dependencies
